@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volume-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volume-demo
+  template:
+    metadata:
+      labels:
+        app: volume-demo
+    spec:
+      containers:
+      - name: busybox-volume
+        image: busybox
+        command: ["sh", "-c", "while true; do cat /etc/config/WELCOME_MSG; echo ''; sleep 5; done"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: demo-config

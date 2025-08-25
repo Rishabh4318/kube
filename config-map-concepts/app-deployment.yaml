@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: env-demo
+  template:
+    metadata:
+      labels:
+        app: env-demo
+    spec:
+      containers:
+      - name: busybox-env
+        image: busybox
+        command: ["sh", "-c", "while true; do echo EnvVar: $WELCOME_MSG; sleep 5; done"]
+        env:
+        - name: WELCOME_MSG
+          valueFrom:
+            configMapKeyRef:
+              name: demo-config
+              key: WELCOME_MSG
