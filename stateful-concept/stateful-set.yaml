@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+spec:
+  serviceName: "my-statefulset-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-statefulset
+  template:
+    metadata:
+      labels:
+        app: my-statefulset
+    spec:
+      containers:
+      - name: my-app
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: my-storage
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: my-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
