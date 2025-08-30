@@ -1,0 +1,4 @@
+configmap/indexfile-8bd7tt5k4h unchanged
+configmap/nginx-config-cbm67m9gcc unchanged
+service/nginx-svc unchanged
+deployment.apps/nginx-app unchanged
